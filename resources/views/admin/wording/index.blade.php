@@ -1,7 +1,7 @@
 
 @extends('layouts/admin')
 
-@section('title', 'Users')
+@section('title', 'Translation')
 
 @section('vendor-style')
     {{-- vendor css files --}}
@@ -27,11 +27,11 @@
         <div class="col-span-12 mt-6">
             <div class="intro-y block sm:flex items-center h-10">
                 <h2 class="text-lg font-medium truncate mr-5">
-                    Users
+                    Translation
                 </h2>
-                @can('user-create')
+                @can('wording-create')
                     <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-                        <a class="button box flex items-center text-gray-700 dark:text-gray-300" href="{{route('user-create')}}"> <i data-feather="user-plus" class="hidden sm:block w-4 h-4 mr-2"></i> New User </a>
+                        <a class="button box flex items-center text-gray-700 dark:text-gray-300" href="{{route('wording-create')}}"> <i data-feather="plus-square" class="hidden sm:block w-4 h-4 mr-2"></i> New Translation</a>
                     </div>
                 @endcan
             </div>
@@ -42,9 +42,10 @@
                     <tr>
                         <th></th>
                         <th>ID</th>
-                        <th>{{$translation['admin']['user.column.name']['text']}}</th>
-                        <th>{{$translation['admin']['user.column.email']['text']}}</th>
-                        <th>{{$translation['admin']['user.column.email_verified']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.namespace']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.group']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.key']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.text']['text']}}</th>
                         <th>{{$translation['*']['global.created_at']['text']}}</th>
                         <th>{{$translation['*']['global.updated_at']['text']}}</th>
                         <th>{{$translation['*']['global.action']['text']}}</th>
@@ -54,9 +55,10 @@
                     <tr>
                         <th></th>
                         <th>ID</th>
-                        <th>{{$translation['admin']['user.column.name']['text']}}</th>
-                        <th>{{$translation['admin']['user.column.email']['text']}}</th>
-                        <th>{{$translation['admin']['user.column.email_verified']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.namespace']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.group']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.key']['text']}}</th>
+                        <th>{{$translation['admin']['translation.column.text']['text']}}</th>
                         <th>{{$translation['*']['global.created_at']['text']}}</th>
                         <th>{{$translation['*']['global.updated_at']['text']}}</th>
                         <th>{{$translation['*']['global.action']['text']}}</th>
@@ -99,9 +101,10 @@
                 columns: [
                     {data: 'responsive_id'},
                     {data: 'id'},
-                    {data: 'name'},
-                    {data: 'email'},
-                    {data: 'email_verified_at'},
+                    {data: 'namespace'},
+                    {data: 'group'},
+                    {data: 'key'},
+                    {data: 'text'},
                     {data: 'created_at'},
                     {data: 'updated_at'},
                     {data: 'id'}
@@ -120,8 +123,8 @@
 
                             return (
                                 '<div class="links">' +
-                                '@can("user-edit")<a  href="/admin/user/'+$id+'"class="btn btn-primary btn-icon "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a> @endcan' +
-                                '@can("user-destroy")<form method="POST"  action="/admin/user/'+$id+'" style="display: inline"> @CSRF @method('delete')' +
+                                '@can("wording-edit")<a  href="/admin/translation/'+$id+'"class="btn btn-primary btn-icon "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a> @endcan' +
+                                '@can("wording-destroy")<form method="POST"  action="/admin/translation/'+$id+'" style="display: inline"> @CSRF @method('delete')' +
                                 '<btn type="submit"  class="btn btn-danger btn-icon js-swal-confirm submit-delete"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></btn> </form>@endcan' +
                                 '</div>'
                             );

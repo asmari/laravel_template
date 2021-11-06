@@ -1,101 +1,75 @@
-@extends('layouts/contentLayoutMaster')
+@extends('layouts/admin')
 
 @section('title', 'Create User')
 @section('vendor-style')
     {{-- Vendor Css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/flatpickr/flatpickr.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset('vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
 @endsection
 
 @section('page-style')
     {{-- Page Css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-flat-pickr.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-flat-pickr.css') }}">
 @endsection
 @section('content')
-    <!-- Basic multiple Column Form section start -->
-    <section id="multiple-column-form">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Create User</h4>
-                    </div>
-                    <div class="card-body">
-                        <form class="form needs-validation" novalidate id="jquery-val-form" method="post" action="{{route('user-store')}}">
-                            @CSRF
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="first-name-column">Name</label>
-                                        <input
-                                                type="text"
-                                                id="first-name-column"
-                                                class="form-control"
-                                                placeholder="Name"
-                                                name="name"
-                                                required
-                                        />
-                                    </div>
-                                </div>
 
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="email-id-column">Email</label>
-                                        <input
-                                                type="email"
-                                                id="email-id-column"
-                                                class="form-control"
-                                                name="email"
-                                                placeholder="Email"
-                                                required
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" id="password" class="form-control" placeholder="Password" name="password" required/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="confirm-password">Confirm Password</label>
-                                        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm Password" name="confirm-password" required/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="role">Role</label>
-                                        <select class="form-control select2" id="role" name="role" required>
-                                            <option>Select Role</option>
-                                            @foreach($roles as $role)
-                                                <option value="{{$role->name}}">{{$role->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary mr-1">Submit</button>
-                                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                                </div>
-                            </div>
-                        </form>
+    <div class="intro-y flex items-center mt-12">
+        <h2 class="text-lg font-medium mr-auto">
+            Create User
+        </h2>
+    </div>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 lg:col-span-12">
+            <!-- BEGIN: Form Layout -->
+            <div class="intro-y box p-5">
+                <form class="form needs-validation" id="jquery-val-form" method="post" action="{{route('user-store')}}">
+                    @CSRF
+                    <div>
+                        <label>Name</label>
+                        <input type="text" name="name"  class="input w-full border mt-2" placeholder="Name" required>
                     </div>
-                </div>
+                    <div>
+                        <label>Email</label>
+                        <input type="email" name="email" class="input w-full border mt-2" placeholder="Email" required>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="password" class="input w-full border mt-2" placeholder="Password" id="password" >
+                    </div>
+                    <div>
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm-password" class="input w-full border mt-2" placeholder="Password" >
+                    </div>
+                    <div class="mt-3">
+                        <label>Role</label>
+                        <div class="mt-2">
+                            <select data-placeholder="Select Role" class="tail-select w-full" name="role" required>
+                                @foreach($roles as $role)
+                                    <option value="{{$role->name}}">{{$role->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-right mt-5">
+                        <button type="reset" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cancel</button>
+                        <button type="submit" class="button w-24 bg-theme-1 text-white">Save</button>
+                    </div>
+                </form>
             </div>
+            <!-- END: Form Layout -->
         </div>
-    </section>
+    </div>
     <!-- Basic Floating Label Form section end -->
 @endsection
 
 @section('vendor-script')
     <!-- vendor files -->
-    <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
+    <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
 
-    <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
+    <script src="{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
 @endsection
 @section('page-script')
     <script>
@@ -144,10 +118,9 @@
                             email: true
                         },
                         'password': {
-                            required: true
+                            required: false
                         },
                         'confirm-password': {
-                            required: true,
                             equalTo: '#password'
                         },
                         'role': {

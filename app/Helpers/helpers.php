@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Config;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Helper
@@ -63,5 +64,9 @@ class Helper
                 'name'=>'Official'
             ],
         ];
+    }
+    public static function translation($key)
+    {
+        return Cache::get('translation')[$key];
     }
 }

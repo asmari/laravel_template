@@ -1,6 +1,6 @@
 @extends('layouts/admin')
 
-@section('title', 'Edit User')
+@section('title', 'Create Translation')
 @section('vendor-style')
     {{-- Vendor Css files --}}
     <link rel="stylesheet" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
@@ -17,45 +17,38 @@
 
     <div class="intro-y flex items-center mt-12">
         <h2 class="text-lg font-medium mr-auto">
-            Edit User
+            Create Translation
         </h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-12">
             <!-- BEGIN: Form Layout -->
             <div class="intro-y box p-5">
-                <form class="form needs-validation" id="jquery-val-form" method="post" action="{{route('user-update',$user->id)}}">
+                <form class="form needs-validation" id="jquery-val-form" method="post" action="{{route('wording-store')}}">
                     @CSRF
                     <div>
-                        <label>Name</label>
-                        <input type="text" name="name"  class="input w-full border mt-2" placeholder="Name" value="{{$user->name}}" required>
+                        <input type="hidden" value="*" name="namespace"  class="input w-full border mt-2" placeholder="Name" required>
                     </div>
-                    <div>
-                        <label>Email</label>
-                        <input type="email" name="email" class="input w-full border mt-2" placeholder="Email" value="{{$user->email}}" required>
-                    </div>
-                    @role('Super Admin')
-                    <div>
-                        <label>Password</label>
-                        <input type="password" name="password" class="input w-full border mt-2" placeholder="Password" id="password" required>
-                    </div>
-                    <div>
-                        <label>Password</label>
-                        <input type="password" name="confirm-password" class="input w-full border mt-2" placeholder="Password" required>
-                    </div>
-                    @endrole
                     <div class="mt-3">
-                        <label>Role</label>
+                        <label>Group</label>
                         <div class="mt-2">
-                            <select data-placeholder="Select Role" class="tail-select w-full" required>
-                                @foreach($roles as $role)
-                                    <option value="{{$role->name}}" @if ($role->name == $user->getRoleNames()[0])
-                                    selected="selected"
-                                        @endif >{{$role->name}}</option>
-                                @endforeach
+                            <select data-placeholder="Select Group"  name="group" class="tail-select w-full" required>
+                                    <option value="*">All</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="web">Web</option>
                             </select>
                         </div>
                     </div>
+                    <div>
+                        <label>Key</label>
+                        <input type="tersxt" name="key" class="input w-full border mt-2" placeholder="Key" required>
+                    </div>
+                    @foreach($locales as $locale)
+                    <div>
+                        <label>Text {{strtoupper($locale)}}</label>
+                        <input type="text" name="text[{{$locale}}]" class="input w-full border mt-2" placeholder="Text {{strtoupper($locale)}}" required>
+                    </div>
+                    @endforeach
                     <div class="text-right mt-5">
                         <button type="reset" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cancel</button>
                         <button type="submit" class="button w-24 bg-theme-1 text-white">Save</button>
@@ -65,7 +58,6 @@
             <!-- END: Form Layout -->
         </div>
     </div>
-    <!-- Basic Floating Label Form section end -->
 @endsection
 
 @section('vendor-script')
@@ -121,7 +113,11 @@
                             required: true,
                             email: true
                         },
+                        'password': {
+                            required: true
+                        },
                         'confirm-password': {
+                            required: true,
                             equalTo: '#password'
                         },
                         'role': {
